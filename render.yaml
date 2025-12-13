@@ -1,4 +1,5 @@
 services:
+  # الخدمة الرئيسية (الخادم)
   - type: web
     name: digital-services-app
     env: node
@@ -8,12 +9,16 @@ services:
     envVars:
       - key: NODE_ENV
         value: production
+      # هذا يربط قاعدة البيانات تلقائياً
       - fromDatabase:
           name: digital-services-db
           property: connectionString
 
-  - type: pgluster
+  # قاعدة البيانات - التصحيح هنا
+  - type: postgresql  # كان pgluster والصحيح postgresql
     name: digital-services-db
-    ipAllowList: [] 
+    plan: free  # أضف هذا للسعر المجاني
+    ipAllowList: [] # اتركه فارغاً للسماح بالاتصال من خدماتك فقط
 
+# إعدادات عامة
 version: "1"
