@@ -8,9 +8,6 @@ services:
     envVars:
       - key: NODE_ENV
         value: production
-      # سنضيف DATABASE_URL يدوياً لاحقاً
-    # إعدادات إضافية مهمة
-    autoDeploy: true
     healthCheckPath: /
     plan: free
 version: "1"
