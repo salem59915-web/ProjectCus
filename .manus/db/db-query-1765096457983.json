@@ -1,0 +1,15 @@
+{
+  "query": "SELECT id, name, sampleAudios FROM voiceArtists LIMIT 5;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3QfrsxXYmxBF15b.root --database NHiW9nVxBLJLPRkW2d66dt --execute SELECT id, name, sampleAudios FROM voiceArtists LIMIT 5;",
+  "rows": [
+    {
+      "id": "120001",
+      "name": "ريم علي ",
+      "sampleAudios": "NULL"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tname\tsampleAudios\n120001\tريم علي \tNULL\n",
+  "stderr": "",
+  "execution_time_ms": 2002
+}

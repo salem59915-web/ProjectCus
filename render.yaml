@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: digital-services-app
+    env: node
+    rootDirectory: .
+    buildCommand: pnpm install && pnpm run build
+    startCommand: pnpm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - fromDatabase:
+          name: digital-services-db
+          property: connectionString
+
+  - type: pgluster
+    name: digital-services-db
+    ipAllowList: [] 
+
+version: "1"

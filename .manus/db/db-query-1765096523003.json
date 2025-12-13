@@ -1,0 +1,16 @@
+{
+  "query": "SELECT id, name, sampleAudios, voiceType FROM voiceArtists;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3QfrsxXYmxBF15b.root --database NHiW9nVxBLJLPRkW2d66dt --execute SELECT id, name, sampleAudios, voiceType FROM voiceArtists;",
+  "rows": [
+    {
+      "id": "120001",
+      "name": "ريم علي ",
+      "sampleAudios": "NULL",
+      "voiceType": ""
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tname\tsampleAudios\tvoiceType\n120001\tريم علي \tNULL\t\n",
+  "stderr": "",
+  "execution_time_ms": 1561
+}

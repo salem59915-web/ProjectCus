@@ -1,0 +1,70 @@
+{
+  "query": "SELECT * FROM models LIMIT 10",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway02.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3QfrsxXYmxBF15b.root --database NHiW9nVxBLJLPRkW2d66dt --execute SELECT * FROM models LIMIT 10",
+  "rows": [
+    {
+      "id": "1",
+      "name": "أحمد محمد",
+      "age": "25",
+      "gender": "male",
+      "bio": "مودل محترف متخصص في الإعلانات التجارية والأزياء",
+      "profileImage": "/models-service.jpg",
+      "videoUrl": "NULL",
+      "height": "180",
+      "experience": "5 سنوات خبرة في مجال عرض الأزياء",
+      "specialties": "[\"أزياء\",\"إعلانات تجارية\"]",
+      "isActive": "1",
+      "createdAt": "2025-11-28 02:46:01",
+      "updatedAt": "2025-11-28 02:46:01"
+    },
+    {
+      "id": "2",
+      "name": "سارة أحمد",
+      "age": "23",
+      "gender": "female",
+      "bio": "مودل متخصصة في التصوير التجاري ومنتجات التجميل",
+      "profileImage": "/models-service.jpg",
+      "videoUrl": "NULL",
+      "height": "170",
+      "experience": "3 سنوات خبرة",
+      "specialties": "[\"جمال\",\"إعلانات تجارية\"]",
+      "isActive": "1",
+      "createdAt": "2025-11-28 02:46:01",
+      "updatedAt": "2025-11-28 02:46:01"
+    },
+    {
+      "id": "3",
+      "name": "خالد عبدالله",
+      "age": "30",
+      "gender": "male",
+      "bio": "مودل رياضي متخصص في إعلانات اللياقة البدنية",
+      "profileImage": "/models-service.jpg",
+      "videoUrl": "NULL",
+      "height": "185",
+      "experience": "7 سنوات خبرة",
+      "specialties": "[\"لياقة بدنية\",\"رياضة\"]",
+      "isActive": "1",
+      "createdAt": "2025-11-28 02:46:01",
+      "updatedAt": "2025-11-28 02:46:01"
+    },
+    {
+      "id": "30001",
+      "name": "Test Model",
+      "age": "25",
+      "gender": "male",
+      "bio": "Test bio",
+      "profileImage": "NULL",
+      "videoUrl": "NULL",
+      "height": "180",
+      "experience": "NULL",
+      "specialties": "NULL",
+      "isActive": "1",
+      "createdAt": "2025-12-04 17:51:16",
+      "updatedAt": "2025-12-04 17:51:16"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\tname\tage\tgender\tbio\tprofileImage\tvideoUrl\theight\texperience\tspecialties\tisActive\tcreatedAt\tupdatedAt\n1\tأحمد محمد\t25\tmale\tمودل محترف متخصص في الإعلانات التجارية والأزياء\t/models-service.jpg\tNULL\t180\t5 سنوات خبرة في مجال عرض الأزياء\t[\"أزياء\",\"إعلانات تجارية\"]\t1\t2025-11-28 02:46:01\t2025-11-28 02:46:01\n2\tسارة أحمد\t23\tfemale\tمودل متخصصة في التصوير التجاري ومنتجات التجميل\t/models-service.jpg\tNULL\t170\t3 سنوات خبرة\t[\"جمال\",\"إعلانات تجارية\"]\t1\t2025-11-28 02:46:01\t2025-11-28 02:46:01\n3\tخالد عبدالله\t30\tmale\tمودل رياضي متخصص في إعلانات اللياقة البدنية\t/models-service.jpg\tNULL\t185\t7 سنوات خبرة\t[\"لياقة بدنية\",\"رياضة\"]\t1\t2025-11-28 02:46:01\t2025-11-28 02:46:01\n30001\tTest Model\t25\tmale\tTest bio\tNULL\tNULL\t180\tNULL\tNULL\t1\t2025-12-04 17:51:16\t2025-12-04 17:51:16\n",
+  "stderr": "",
+  "execution_time_ms": 1945
+}
