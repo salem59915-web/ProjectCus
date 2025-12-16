@@ -497,12 +497,12 @@ function AddModelForm({ onClose }: any) {
 
           <div>
             <label className="block text-sm mb-2" style={{ color: COLORS.textSecondary }}>
-              رابط VIMEO (اختياري)
+              رابط عمل عينة (VIMEO)
             </label>
             <input
               type="url"
-              value={formData.vimeoUrl}
-              onChange={(e) => setFormData({ ...formData, vimeoUrl: e.target.value })}
+              value={formData.sampleWorks}
+              onChange={(e) => setFormData({ ...formData, sampleWorks: e.target.value })}
               placeholder="https://vimeo.com/..."
               className="w-full px-4 py-2 rounded-lg"
               style={{ backgroundColor: COLORS.dark, color: COLORS.text }}
@@ -526,8 +526,8 @@ function AddCreatorForm({ onClose }: any) {
   const [formData, setFormData] = useState({
     name: "",
     platforms: "",
-    specialization: "",
-    vimeoUrl: "",
+    contentTypes: "",
+    sampleWorks: "",
   });
 
   const createMutation = trpc.contentCreators.create.useMutation();
@@ -538,13 +538,17 @@ function AddCreatorForm({ onClose }: any) {
       {
         name: formData.name,
         platforms: formData.platforms,
-        specialization: formData.specialization,
-        vimeoUrl: formData.vimeoUrl,
+        contentTypes: formData.contentTypes,
+        sampleWorks: formData.sampleWorks,
       },
       {
         onSuccess: () => {
           onClose();
-          setFormData({ name: "", platforms: "", specialization: "", vimeoUrl: "" });
+          setFormData({ name: "", platforms: "", contentTypes: "", sampleWorks: "" });
+        },
+        onError: (error: any) => {
+          alert(`فشل الإضافة: ${error.message}`);
+          console.error("Creation failed:", error);
         },
       }
     );
@@ -594,11 +598,11 @@ function AddCreatorForm({ onClose }: any) {
 
           <div>
             <label className="block text-sm mb-2" style={{ color: COLORS.textSecondary }}>
-              التخصص
+              نوع المحتوى
             </label>
             <select
-              value={formData.specialization}
-              onChange={(e) => setFormData({ ...formData, specialization: e.target.value })}
+              value={formData.contentTypes}
+              onChange={(e) => setFormData({ ...formData, contentTypes: e.target.value })}
               className="w-full px-4 py-2 rounded-lg"
               style={{ backgroundColor: COLORS.dark, color: COLORS.text }}
             >
@@ -615,12 +619,12 @@ function AddCreatorForm({ onClose }: any) {
 
           <div>
             <label className="block text-sm mb-2" style={{ color: COLORS.textSecondary }}>
-              رابط VIMEO (اختياري)
+              رابط عمل عينة (VIMEO)
             </label>
             <input
               type="url"
-              value={formData.vimeoUrl}
-              onChange={(e) => setFormData({ ...formData, vimeoUrl: e.target.value })}
+              value={formData.sampleWorks}
+              onChange={(e) => setFormData({ ...formData, sampleWorks: e.target.value })}
               placeholder="https://vimeo.com/..."
               className="w-full px-4 py-2 rounded-lg"
               style={{ backgroundColor: COLORS.dark, color: COLORS.text }}
@@ -665,17 +669,15 @@ function AddVoiceForm({ onClose }: any) {
     formDataToSend.append("language", formData.language);
     formDataToSend.append("audioFile", formData.audioFile);
 
-    createMutation.mutate(
-      {
-        name: formData.name,
-        gender: formData.gender,
-        voiceType: formData.voiceType,
-        language: formData.language,
-      },
+    createMutation.mutate(formDataToSend as any,
       {
         onSuccess: () => {
           onClose();
           setFormData({ name: "", gender: "female", voiceType: "neutral", language: "ar", audioFile: null });
+        },
+        onError: (error: any) => {
+          alert(`فشل إضافة الملف الصوتي: ${error.message}`);
+          console.error("Audio file upload failed:", error);
         },
       }
     );
@@ -972,12 +974,12 @@ function AddWriterForm({ onClose }: any) {
 
           <div>
             <label className="block text-sm mb-2" style={{ color: COLORS.textSecondary }}>
-              التخصص
+              نوع المحتوى
             </label>
             <input
               type="text"
-              value={formData.specialization}
-              onChange={(e) => setFormData({ ...formData, specialization: e.target.value })}
+              value={formData.contentTypes}
+              onChange={(e) => setFormData({ ...formData, contentTypes: e.target.value })}
               placeholder="مثال: تكنولوجيا، صحة، تجارة"
               className="w-full px-4 py-2 rounded-lg"
               style={{ backgroundColor: COLORS.dark, color: COLORS.text }}
