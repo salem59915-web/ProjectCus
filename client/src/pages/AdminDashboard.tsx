@@ -307,7 +307,7 @@ function AddCreatorForm({ onClose }: any) {
           <input type="text" value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} placeholder="الاسم" className="w-full px-4 py-2 rounded-lg" style={{ backgroundColor: COLORS.dark, color: COLORS.text }} required />
           <input type="text" value={formData.platforms} onChange={(e) => setFormData({ ...formData, platforms: e.target.value })} placeholder="المنصات" className="w-full px-4 py-2 rounded-lg" style={{ backgroundColor: COLORS.dark, color: COLORS.text }} required />
           <input type="text" value={formData.contentTypes} onChange={(e) => setFormData({ ...formData, contentTypes: e.target.value })} placeholder="نوع المحتوى" className="w-full px-4 py-2 rounded-lg" style={{ backgroundColor: COLORS.dark, color: COLORS.text }} />
-          <input type="url" value={formData.portfolioUrl} onChange={(e) => setFormData({ ...formData, portfolioUrl: e.target.value })} placeholder="رابط المحفظة" className="w-full px-4 py-2 rounded-lg" style={{ backgroundColor: COLORS.dark, color: COLORS.text }} />
+          <input type="url" value={formData.portfolioUrl} onChange={(e) => setFormData({ ...formData, portfolioUrl: e.target.value })} placeholder="رابط فيمو" className="w-full px-4 py-2 rounded-lg" style={{ backgroundColor: COLORS.dark, color: COLORS.text }} />
           <button type="submit" disabled={loading} className="w-full py-2 rounded-lg font-bold" style={{ backgroundColor: COLORS.primary, color: COLORS.darker }}>
             {loading ? "جاري..." : "إضافة"}
           </button>
