@@ -14,8 +14,19 @@ import { getDb } from "./db";
 import { models, contentCreators, videoProductions, voiceArtists, contentWriting, banners } from "../drizzle/schema";
 import { eq } from "drizzle-orm";
 
+// دالة مساعدة لتنظيف البيانات من القيم الفارغة لمنع أخطاء SQL
+function cleanInputData(input: any) {
+  const clean: any = {};
+  for (const key in input) {
+    const val = input[key];
+    if (val !== undefined && val !== null && val !== "" && val !== "null") {
+      clean[key] = val;
+    }
+  }
+  return clean;
+}
+
 export const appRouter = router({
-    // if you need to use socket.io, read and register route in server/_core/index.ts, all api should start with '/api/' so that the gateway can route correctly
   system: systemRouter,
   auth: router({
     me: publicProcedure.query(opts => opts.ctx.user),
@@ -50,12 +61,12 @@ export const appRouter = router({
       .input(
         z.object({
           name: z.string(),
-          age: z.number(),
+          age: z.coerce.number(),
           gender: z.enum(["male", "female"]),
           bio: z.string().optional(),
           profileImage: z.string().optional(),
           videoUrl: z.string().optional(),
-          height: z.number().optional(),
+          height: z.coerce.number().optional(),
           experience: z.string().optional(),
           specialties: z.string().optional(),
         })
@@ -63,7 +74,8 @@ export const appRouter = router({
       .mutation(async ({ input }) => {
         const db = await getDb();
         if (!db) throw new Error("Database not available");
-        const result = await db.insert(models).values(input);
+        const cleanData = cleanInputData(input);
+        const result = await db.insert(models).values(cleanData);
         return { success: true, id: result[0].insertId };
       }),
 
@@ -72,12 +84,12 @@ export const appRouter = router({
         z.object({
           id: z.number(),
           name: z.string().optional(),
-          age: z.number().optional(),
+          age: z.coerce.number().optional(),
           gender: z.enum(["male", "female"]).optional(),
           bio: z.string().optional(),
           profileImage: z.string().optional(),
           videoUrl: z.string().optional(),
-          height: z.number().optional(),
+          height: z.coerce.number().optional(),
           experience: z.string().optional(),
           specialties: z.string().optional(),
           isActive: z.number().optional(),
@@ -87,7 +99,8 @@ export const appRouter = router({
         const db = await getDb();
         if (!db) throw new Error("Database not available");
         const { id, ...data } = input;
-        await db.update(models).set(data).where(eq(models.id, id));
+        const cleanData = cleanInputData(data);
+        await db.update(models).set(cleanData).where(eq(models.id, id));
         return { success: true };
       }),
 
@@ -132,20 +145,7 @@ export const appRouter = router({
       .mutation(async ({ input }) => {
         const db = await getDb();
         if (!db) throw new Error("Database not available");
-        
-        // تنظيف البيانات وإزالة الحقول غير المطلوبة أو الفارغة
-        const cleanData: any = {
-          name: input.name,
-        };
-        
-        // إضافة الحقول الاختيارية فقط إذا كانت موجودة وليست فارغة (null, undefined, or empty string)
-        if (input.bio && input.bio.trim() !== "") cleanData.bio = input.bio;
-        if (input.profileImage && input.profileImage.trim() !== "") cleanData.profileImage = input.profileImage;
-        if (input.portfolioUrl && input.portfolioUrl.trim() !== "") cleanData.portfolioUrl = input.portfolioUrl;
-        if (input.platforms && input.platforms.trim() !== "") cleanData.platforms = input.platforms;
-        if (input.contentTypes && input.contentTypes.trim() !== "") cleanData.contentTypes = input.contentTypes;
-        if (input.sampleWorks && input.sampleWorks.trim() !== "") cleanData.sampleWorks = input.sampleWorks;
-        
+        const cleanData = cleanInputData(input);
         const result = await db.insert(contentCreators).values(cleanData);
         return { success: true, id: result[0].insertId };
       }),
@@ -168,7 +168,8 @@ export const appRouter = router({
         const db = await getDb();
         if (!db) throw new Error("Database not available");
         const { id, ...data } = input;
-        await db.update(contentCreators).set(data).where(eq(contentCreators.id, id));
+        const cleanData = cleanInputData(data);
+        await db.update(contentCreators).set(cleanData).where(eq(contentCreators.id, id));
         return { success: true };
       }),
 
@@ -206,13 +207,14 @@ export const appRouter = router({
           thumbnailUrl: z.string().optional(),
           productionType: z.string().optional(),
           clientName: z.string().optional(),
-          duration: z.number().optional(),
+          duration: z.coerce.number().optional(),
         })
       )
       .mutation(async ({ input }) => {
         const db = await getDb();
         if (!db) throw new Error("Database not available");
-        const result = await db.insert(videoProductions).values(input);
+        const cleanData = cleanInputData(input);
+        const result = await db.insert(videoProductions).values(cleanData);
         return { success: true, id: result[0].insertId };
       }),
 
@@ -226,7 +228,7 @@ export const appRouter = router({
           thumbnailUrl: z.string().optional(),
           productionType: z.string().optional(),
           clientName: z.string().optional(),
-          duration: z.number().optional(),
+          duration: z.coerce.number().optional(),
           isActive: z.number().optional(),
         })
       )
@@ -234,7 +236,8 @@ export const appRouter = router({
         const db = await getDb();
         if (!db) throw new Error("Database not available");
         const { id, ...data } = input;
-        await db.update(videoProductions).set(data).where(eq(videoProductions.id, id));
+        const cleanData = cleanInputData(data);
+        await db.update(videoProductions).set(cleanData).where(eq(videoProductions.id, id));
         return { success: true };
       }),
 
@@ -281,7 +284,8 @@ export const appRouter = router({
       .mutation(async ({ input }) => {
         const db = await getDb();
         if (!db) throw new Error("Database not available");
-        const result = await db.insert(voiceArtists).values(input);
+        const cleanData = cleanInputData(input);
+        const result = await db.insert(voiceArtists).values(cleanData);
         return { success: true, id: result[0].insertId };
       }),
 
@@ -304,7 +308,8 @@ export const appRouter = router({
         const db = await getDb();
         if (!db) throw new Error("Database not available");
         const { id, ...data } = input;
-        await db.update(voiceArtists).set(data).where(eq(voiceArtists.id, id));
+        const cleanData = cleanInputData(data);
+        await db.update(voiceArtists).set(cleanData).where(eq(voiceArtists.id, id));
         return { success: true };
       }),
 
@@ -341,13 +346,14 @@ export const appRouter = router({
           contentType: z.string().optional(),
           sampleText: z.string().optional(),
           clientName: z.string().optional(),
-          wordCount: z.number().optional(),
+          wordCount: z.coerce.number().optional(),
         })
       )
       .mutation(async ({ input }) => {
         const db = await getDb();
         if (!db) throw new Error("Database not available");
-        const result = await db.insert(contentWriting).values(input);
+        const cleanData = cleanInputData(input);
+        const result = await db.insert(contentWriting).values(cleanData);
         return { success: true, id: result[0].insertId };
       }),
 
@@ -360,7 +366,7 @@ export const appRouter = router({
           contentType: z.string().optional(),
           sampleText: z.string().optional(),
           clientName: z.string().optional(),
-          wordCount: z.number().optional(),
+          wordCount: z.coerce.number().optional(),
           isActive: z.number().optional(),
         })
       )
@@ -368,7 +374,8 @@ export const appRouter = router({
         const db = await getDb();
         if (!db) throw new Error("Database not available");
         const { id, ...data } = input;
-        await db.update(contentWriting).set(data).where(eq(contentWriting.id, id));
+        const cleanData = cleanInputData(data);
+        await db.update(contentWriting).set(cleanData).where(eq(contentWriting.id, id));
         return { success: true };
       }),
 
@@ -402,14 +409,15 @@ export const appRouter = router({
           description: z.string().optional(),
           imageUrl: z.string(),
           link: z.string().optional(),
-          position: z.number().optional(),
+          position: z.coerce.number().optional(),
           isActive: z.number().optional(),
         })
       )
       .mutation(async ({ input }) => {
         const db = await getDb();
         if (!db) throw new Error("Database not available");
-        const result = await db.insert(banners).values(input);
+        const cleanData = cleanInputData(input);
+        const result = await db.insert(banners).values(cleanData);
         return { success: true, id: result[0].insertId };
       }),
 
@@ -421,7 +429,7 @@ export const appRouter = router({
           description: z.string().optional(),
           imageUrl: z.string().optional(),
           link: z.string().optional(),
-          position: z.number().optional(),
+          position: z.coerce.number().optional(),
           isActive: z.number().optional(),
         })
       )
@@ -429,7 +437,8 @@ export const appRouter = router({
         const db = await getDb();
         if (!db) throw new Error("Database not available");
         const { id, ...data } = input;
-        await db.update(banners).set(data).where(eq(banners.id, id));
+        const cleanData = cleanInputData(data);
+        await db.update(banners).set(cleanData).where(eq(banners.id, id));
         return { success: true };
       }),
 
